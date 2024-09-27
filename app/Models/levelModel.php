@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class levelModel extends Model
 {
@@ -13,4 +14,8 @@ class levelModel extends Model
     protected $primaryKey = 'level_id'; //Mendefinisikan primary key dari tabel yang digunakan
 
     protected $fillable = ['level_id', 'level_kode', 'level_nama'];
+
+    public function user(): HasMany {
+        return $this->hasMany(UserModel::class, 'user_id', 'user_id');
+    }
 }
