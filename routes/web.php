@@ -27,6 +27,8 @@ Route::group(['prefix' => 'user'], function() {
     Route::post('/list', [UserController::class, 'list']);          // menampilkan data user dalam bentuk json untuk datatables
     Route::get('/create', [UserController::class, 'create']);       // menampilkan halaman form tambah user
     Route::post('/', [UserController::class, 'store']);             // menyimpan data user baru
+    Route::get('/create_ajax', [UserController::class, 'create_ajax']); // Menampilkan halaman form tambah user Ajax
+    Route::post('/ajax', [UserController::class, 'store_ajax']); // Menyimpan data user baru Ajax
     Route::get('/{id}', [UserController::class, 'show']);           // menampilkan detail user
     Route::get('/{id}/edit', [UserController::class, 'edit']);     // menampilkan halaman form edit user
     Route::put('/{id}', [UserController::class, 'update']);         // menyiapkan perubahan data user
@@ -34,7 +36,7 @@ Route::group(['prefix' => 'user'], function() {
 });
 Route::group(['prefix' => 'level'], function() {
     Route::get('/', [LevelController::class, 'index']);              // menampilkan halaman awal user
-    Route::post('/list', [LevelController::class, 'list']);          // menampilkan data user dalam bentuk json untuk datatables
+    Route::post('/list', [LevelController::class, 'l0ist']);          // menampilkan data user dalam bentuk json untuk datatables
     Route::get('/create', [LevelController::class, 'create']);       // menampilkan halaman form tambah user
     Route::post('/', [LevelController::class, 'store']);             // menyimpan data user baru
     Route::get('/{id}', [LevelController::class, 'show']);           // menampilkan detail user
