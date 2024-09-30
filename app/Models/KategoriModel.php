@@ -13,7 +13,7 @@ class KategoriModel extends Model
     protected $table = 'm_kategori'; //Mendefinisikan nama tabel yang digunakan oleh model ini
     protected $primaryKey = 'kategori_id'; //Mendefinisikan primary key dari tabel yang digunakan
 
-    protected $fillable = ['kategori_id', 'kategori_kode', 'kategori_nama'];
+    protected $fillable = ['kategori_kode', 'kategori_nama'];
 
     public function barang(): HasMany {
         return $this->hasMany(BarangModel::class, 'kategori_id', 'kategori_id');
