@@ -76,6 +76,7 @@
                 <p>Transaksi Penjualan</p>
               </a>
             </li>
+            <button onclick="window.location.href='logout'" class="btn btn-primary">Logout</button>
           </ul>
     </nav>
   </div>

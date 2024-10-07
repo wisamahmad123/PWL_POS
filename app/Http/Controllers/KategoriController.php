@@ -30,7 +30,7 @@ class KategoriController extends Controller
     public function list(Request $request)
     {
         $kategoris = KategoriModel::select('kategori_id', 'kategori_kode', 'kategori_nama')
-        ->get();
+            ->get();
         return DataTables::of($kategoris)
             ->addIndexColumn() // menambahkan kolom index / no urut (default nama kolom: DT_RowIndex) 
             ->addColumn('aksi', function ($kategori) { // menambahkan kolom aksi 
@@ -52,21 +52,21 @@ confirm(\'Apakah Anda yakit menghapus data ini?\');">Hapus</button></form>';*/
             ->make(true);
     }
 
-     // Menampilkan halaman form tambah kategori 
-     public function create()
-     {
-         $breadcrumb = (object) [
-             'title' => 'Tambah Kategori',
-             'list' => ['Home', 'Kategori', 'Tambah']
-         ];
-         $page = (object) [
-             'title' => 'Tambah kategori baru'
-         ];
-         $activeMenu = 'kategori'; // set menu yang sedang aktif
-         return view('kategori.create', ['breadcrumb' => $breadcrumb, 'page' => $page, 'activeMenu' => $activeMenu]);
-     }
+    // Menampilkan halaman form tambah kategori 
+    public function create()
+    {
+        $breadcrumb = (object) [
+            'title' => 'Tambah Kategori',
+            'list' => ['Home', 'Kategori', 'Tambah']
+        ];
+        $page = (object) [
+            'title' => 'Tambah kategori baru'
+        ];
+        $activeMenu = 'kategori'; // set menu yang sedang aktif
+        return view('kategori.create', ['breadcrumb' => $breadcrumb, 'page' => $page, 'activeMenu' => $activeMenu]);
+    }
 
-      // Menyimpan data kategori baru
+    // Menyimpan data kategori baru
     public function store(Request $request)
     {
         $request->validate([
@@ -87,7 +87,7 @@ confirm(\'Apakah Anda yakit menghapus data ini?\');">Hapus</button></form>';*/
     {
         $kategori = KategoriModel::find($id);
         $breadcrumb = (object) [
-            'title' => 'Detail Kategori Barang', 
+            'title' => 'Detail Kategori Barang',
             'list' => ['Home', 'Kategori', 'Detail']
         ];
         $page = (object) [
