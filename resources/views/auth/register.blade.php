@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Login Pengguna</title>
+    <title>Registrasi Pengguna</title>
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -24,49 +24,50 @@
         <div class="card card-outline card-primary">
             <div class="card-header text-center"><a href="{{ url('/') }}" class="h1"><b>Admin</b>LTE</a></div>
             <div class="card-body">
-                <p class="login-box-msg">Sign in to start your session</p>
-                <form action="{{ url('login') }}" method="POST" id="form-login">
+                <form action="{{ url('registrasi') }}" method="POST" id="form-tambah">
                     @csrf
-                    <div class="input-group mb-3">
-                        <input type="text" id="username" name="username" class="form-control"
-                            placeholder="Username">
-                        <div class="input-group-append">
-                            <div class="input-group-text">
-                                <span class="fas fa-envelope"></span>
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Registrasi Akun</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                        aria-hidden="true">&times;</span></button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="form-group">
+                                    <label>Level Pengguna</label>
+                                    <select name="level_id" id="level_id" class="form-control" required>
+                                        <option value="4">Customer</option>
+                                    </select>
+                                    <small id="error-level_id" class="error-text form-text text-danger"></small>
+                                </div>
+                                <div class="form-group">
+                                    <label>Username</label>
+                                    <input value="" type="text" name="username" id="username"
+                                        class="form-control" required>
+                                    <small id="error-username" class="error-text form-text text-danger"></small>
+                                </div>
+                                <div class="form-group">
+                                    <label>Nama</label>
+                                    <input value="" type="text" name="nama" id="nama"
+                                        class="form-control" required>
+                                    <small id="error-nama" class="error-text form-text text-danger"></small>
+                                </div>
+                                <div class="form-group">
+                                    <label>Password</label>
+                                    <input value="" type="password" name="password" id="password"
+                                        class="form-control" required>
+                                    <small id="error-password" class="error-text form-text text-danger"></small>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" data-dismiss="modal" class="btn btn-warning">Batal</button>
+                                <button type="submit" class="btn btn-primary">Registrasi</button>
                             </div>
                         </div>
-                        <small id="error-username" class="error-text text-danger"></small>
-                    </div>
-                    <div class="input-group mb-3">
-                        <input type="password" id="password" name="password" class="form-control"
-                            placeholder="Password">
-                        <div class="input-group-append">
-                            <div class="input-group-text">
-                                <span class="fas fa-lock"></span>
-                            </div>
-                        </div>
-                        <small id="error-password" class="error-text text-danger"></small>
-                    </div>
-                    <div class="row">
-                        <div class="col-8">
-                            <div class="icheck-primary">
-                                <input type="checkbox" id="remember"><label for="remember">Remember Me</label>
-                            </div>
-                        </div>
-                        <!-- /.col -->
-                        <div class="col-4">
-                            <button type="submit" class="btn btn-primary btn-block">Sign In</button>
-                        </div>
-                        <!-- /.col -->
-                    </div>
                 </form>
-                <p class="registrasi">Belum punya akun? <a href = 'registrasi'>Registrasi</p>
             </div>
-            <!-- /.card-body -->
         </div>
-        <!-- /.card -->
     </div>
-    <!-- /.login-box -->
     <!-- jQuery -->
     <script src="{{ asset('adminlte/plugins/jquery/jquery.min.js') }}"></script>
     <!-- Bootstrap 4 -->
@@ -85,12 +86,21 @@
             }
         });
         $(document).ready(function() {
-            $("#form-login").validate({
+            $("#form-tambah").validate({
                 rules: {
+                    level_id: {
+                        required: true,
+                        number: true
+                    },
                     username: {
                         required: true,
-                        minlength: 4,
+                        minlength: 3,
                         maxlength: 20
+                    },
+                    nama: {
+                        required: true,
+                        minlength: 3,
+                        maxlength: 100
                     },
                     password: {
                         required: true,
@@ -130,7 +140,7 @@
                 errorElement: 'span',
                 errorPlacement: function(error, element) {
                     error.addClass('invalid-feedback');
-                    element.closest('.input-group').append(error);
+                    element.closest('.form-group').append(error);
                 },
                 highlight: function(element, errorClass, validClass) {
                     $(element).addClass('is-invalid');
