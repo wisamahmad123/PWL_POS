@@ -87,18 +87,16 @@ Route::middleware(['auth'])->group(function () {
     Route::middleware(['authorize:ADM,MNG'])-> group(function () {
         Route::get('/barang', [BarangController::class, 'index']);              // menampilkan halaman awal barang
         Route::post('/barang/list', [BarangController::class, 'list']);          // menampilkan data barang dalam bentuk json untuk datatables
-        Route::get('/barang/create', [BarangController::class, 'create']);       // menampilkan halaman form tambah barang
         Route::get('/barang/create_ajax', [BarangController::class, 'create_ajax']); // Menampilkan halaman form tambah barang Ajax
         Route::post('/barang/ajax', [BarangController::class, 'store_ajax']); // Menyimpan data barang baru Ajax
-        Route::post('/barang', [BarangController::class, 'store']);             // menyimpan data barang baru
         Route::get('/barang/{id}', [BarangController::class, 'show']);           // menampilkan detail barang
-        Route::get('/barang/{id}/edit', [BarangController::class, 'edit']);     // menampilkan halaman form edit barang
-        Route::put('/barang/{id}', [BarangController::class, 'update']);         // menyiapkan perubahan data barang
         Route::get('/barang/{id}/edit_ajax', [BarangController::class, 'edit_ajax']); // Menampilkan halaman form edit barang Ajax 
         Route::put('/barang/{id}/update_ajax', [BarangController::class, 'update_ajax']); // Menyimpan perubahan data barang Ajax
         Route::get('/barang/{id}/delete_ajax', [BarangController::class, 'confirm_ajax']); // Untuk tampilkan form confirm delete barang Ajax
         Route::delete('/barang/{id}/delete_ajax', [BarangController::class, 'delete_ajax']); // Untuk hapus data barang Ajax
-        Route::delete('/barang/{id}', [BarangController::class, 'destroy']);     // menghapus data barang
+        Route::get('/barang/import', [BarangController::class, 'import']); // Ajax Form upload excel
+        Route::post('/barang/import_ajax', [BarangController::class, 'import_ajax']); // ajax import excel
+
     });
     Route::middleware(['authorize:ADM,MNG'])-> group(function () {
         Route::get('/supplier', [SupplierController::class, 'index']);              // menampilkan halaman awal supplier
