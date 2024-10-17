@@ -4,6 +4,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BarangController;
 use App\Http\Controllers\KategoriController;
 use App\Http\Controllers\LevelController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WelcomeController;
@@ -32,6 +33,8 @@ Route::post('registrasi', [AuthController::class, 'postregistrasi']);
 Route::middleware(['auth'])->group(function () {
 
     Route::get('/', [WelcomeController::class, 'index']);
+    Route::get('/profile', [ProfileController::class, 'index']);
+    Route::post('/profile/upload', [ProfileController::class, 'upload'])->name('profile.upload');
 
     Route::middleware(['authorize:ADM'])-> group(function () {
         Route::get('/level', [LevelController::class, 'index']);              // menampilkan halaman awal level
