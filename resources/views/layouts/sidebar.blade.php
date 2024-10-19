@@ -19,10 +19,10 @@
             <div class="text-center">
                 @if (Auth::user()->profile_picture)
                     <img src="{{ asset('storage/profile_pictures/' . Auth::user()->profile_picture) }}"
-                        alt="Foto Profil" class="rounded-circle" width="140" height="140">
+                        alt="Foto Profil" class="rounded-circle" width="150" height="150">
                 @else
                     <img src="{{ asset('default_profil.png') }}" alt="Foto Profil Default" class="rounded-circle"
-                        width="140" height="140">
+                        width="150" height="150">
                 @endif
             </div>
             <li class="nav-item">

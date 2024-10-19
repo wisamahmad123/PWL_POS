@@ -31,10 +31,12 @@ Route::get('registrasi', [AuthController::class, 'registrasi']);
 Route::post('registrasi', [AuthController::class, 'postregistrasi']);
 
 Route::middleware(['auth'])->group(function () {
-
     Route::get('/', [WelcomeController::class, 'index']);
-    Route::get('/profile', [ProfileController::class, 'index']);
-    Route::post('/profile/upload', [ProfileController::class, 'upload'])->name('profile.upload');
+
+    Route::middleware(['authorize:ADM,MNG,STF,CUS'])-> group(function () {
+        Route::get('/profile', [ProfileController::class, 'index']);
+        Route::post('/profile/upload', [ProfileController::class, 'upload'])->name('profile.upload');
+    });
 
     Route::middleware(['authorize:ADM'])-> group(function () {
         Route::get('/level', [LevelController::class, 'index']);              // menampilkan halaman awal level
@@ -101,9 +103,8 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/barang/import_ajax', [BarangController::class, 'import_ajax']); // ajax import excel
         Route::GET('/barang/export_excel', [BarangController::class, 'export_excel']); // export excel
         Route::GET('/barang/export_pdf', [BarangController::class, 'export_pdf']); // export pdf
-
-
     });
+    
     Route::middleware(['authorize:ADM,MNG'])-> group(function () {
         Route::get('/supplier', [SupplierController::class, 'index']);              // menampilkan halaman awal supplier
         Route::post('/supplier/list', [SupplierController::class, 'list']);          // menampilkan data supplier dalam bentuk json untuk datatables
