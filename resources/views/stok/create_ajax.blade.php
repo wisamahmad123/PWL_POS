@@ -77,7 +77,7 @@
                 },
                 stok_tanggal: {
                     required: true,
-                    datetime: true
+                    date: true
                 },
                 stok_jumlah: {
                     required: true,

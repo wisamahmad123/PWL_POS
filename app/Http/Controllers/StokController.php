@@ -88,7 +88,7 @@ class StokController extends Controller
                 'barang_id' => ['required', 'integer', 'exists:m_barang,barang_id'],
                 'user_id' => ['required', 'integer', 'exists:m_user,user_id'],
                 'stok_tanggal' => ['required', 'date'],
-                'stok_jumlah' => ['required', 'integer'] 
+                'stok_jumlah' => ['required', 'integer']
             ];
 
             // Validasi permintaan
@@ -101,17 +101,13 @@ class StokController extends Controller
                 ]);
             }
 
-            // Konversi tanggal ke format yang benar untuk MySQL
-            $stokTanggal = Carbon::createFromFormat('Y-m-d\TH:i', $request->stok_tanggal)->format('Y-m-d H:i:s');
 
-            error_log("tanggal");
-            error_log($stokTanggal);
             // Simpan data ke dalam model Stok
             StokModel::create([
                 'supplier_id' => $request->supplier_id,
                 'barang_id' => $request->barang_id,
                 'user_id' => $request->user_id,
-                'stok_tanggal' => $stokTanggal,
+                'stok_tanggal' => $request->stok_tanggal,
                 'stok_jumlah' => $request->stok_jumlah,
             ]);
 
@@ -144,23 +140,19 @@ class StokController extends Controller
         $supplier = SupplierModel::all();
         $barang = BarangModel::all();
         $user = UserModel::all();
-        return view('stok.edit_ajax', compact('stok', 'supplier', 'barang', 'user'));
+        return view('stok.edit_ajax', ['stok' => $stok, 'supplier' => $supplier,  'barang' => $barang,  'user' => $user]);
     }
 
-    public function update_ajax(Request $request, $id)
-    {
+    // Menyimpan perubahan data stok barang ajax
+    public function update_ajax(Request $request, $id){
         // cek apakah request dari ajax
         if ($request->ajax() || $request->wantsJson()) {
             $rules = [
-                'supplier_id' => ['required', 'integer', 'exists:m_supplier,supplier_id'],
-                'barang_id' => [
-                    'required',
-                    'integer',
-                    'exists:m_barang,barang_id'
-                ],
-                'user_id' => ['required', 'integer', 'exists:m_user,user_id'],
-                'stok_tanggal' => ['required', 'datetime'],
-                'stok_jumlah' => ['required', 'integer']
+                'supplier_id'  => 'required|integer',
+                'barang_id'  => 'required|integer',
+                'user_id'  => 'required|integer',
+                'stok_tanggal' => 'required|date',
+                'stok_jumlah'      => 'required|integer'
             ];
             // use Illuminate\Support\Facades\Validator;
             $validator = Validator::make($request->all(), $rules);
@@ -178,7 +170,7 @@ class StokController extends Controller
                     'status' => true,
                     'message' => 'Data berhasil diupdate'
                 ]);
-            } else {
+            } else{
                 return response()->json([
                     'status' => false,
                     'message' => 'Data tidak ditemukan'
@@ -187,6 +179,7 @@ class StokController extends Controller
         }
         return redirect('/');
     }
+
     public function confirm_ajax($id)
     {
         $stok = StokModel::find($id);
@@ -244,7 +237,7 @@ class StokController extends Controller
                             'supplier_id' => $value['A'],
                             'barang_id' => $value['B'],
                             'user_id' => $value['C'],
-                            'stok_tanggal' => $value['D'],
+                            'stok_tanggal' => \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($value['D'])->format('Y-m-d H:i:s'),
                             'stok_jumlah' => $value['E'],
                             'created_at' => now(),
                         ];
