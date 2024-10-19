@@ -45,7 +45,7 @@ class BarangController extends Controller
         return DataTables::of($barang)
             ->addIndexColumn()
             ->addColumn('aksi', function ($barang) { // menambahkan kolom aksi
-                /*$btn = '<a href="'.url('/barang/' . $barang->barang_id).'" class="btn btninfo btn-sm">Detail</a> ';
+                /*$btn = '<a href="'.url('/barang/' . $barang->barang_id).'" class="btn btn-info btn-sm">Detail</a> ';
 $btn .= '<a href="'.url('/barang/' . $barang->barang_id . 
 '/edit').'"class="btn btn-warning btn-sm">Edit</a> ';
 $btn .= '<form class="d-inline-block" method="POST" action="'.
@@ -97,12 +97,27 @@ confirm(\'Apakah Kita yakit menghapus data ini?\');">Hapus</button></form>';*/
         }
         redirect('/');
     }
-    public function edit_ajax($id)
+    // Menampilkan detail kategori
+    public function show(string $id)
     {
         $barang = BarangModel::find($id);
-        $level = LevelModel::select('level_id', 'level_nama')->get();
-        return view('barang.edit_ajax', ['barang' => $barang, 'level' => $level]);
+        $breadcrumb = (object) [
+            'title' => 'Detail Barang',
+            'list' => ['Home', 'Barang', 'Detail']
+        ];
+        $page = (object) [
+            'title' => 'Detail Barang'
+        ];
+        $activeMenu = 'barang'; // set menu yang sedang aktif
+        return view('barang.show', ['breadcrumb' => $breadcrumb, 'page' => $page, 'barang' => $barang, 'activeMenu' => $activeMenu]);
     }
+    public function edit_ajax($id)
+    {
+        $barang = BarangModel::findOrFail($id);
+        $kategori = KategoriModel::all();
+        return view('barang.edit_ajax', compact('barang', 'kategori'));
+    }
+
     public function update_ajax(Request $request, $id)
     {
         // cek apakah request dari ajax
