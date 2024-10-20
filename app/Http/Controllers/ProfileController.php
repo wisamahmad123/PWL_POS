@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use App\Models\UserModel;
+use Yajra\DataTables\DataTables as DataTablesDataTables;
+use Yajra\DataTables\Facades\DataTables;
 
 class ProfileController extends Controller
 {
@@ -24,7 +26,7 @@ class ProfileController extends Controller
 
         return view('profile.index', ['breadcrumb' => $breadcrumb, 'page' => $page, 'activeMenu' => $activeMenu]);
     }
-    
+
     public function upload(Request $request)
     {
         // Validasi file
@@ -34,7 +36,7 @@ class ProfileController extends Controller
 
         // Ambil user yang sedang login
         $user = Auth::user();
-        
+
         // Pastikan user ada
         if (!$user || !($user instanceof UserModel)) {
             return redirect()->back()->withErrors(['msg' => 'User not found.']);
@@ -61,5 +63,31 @@ class ProfileController extends Controller
         }
 
         return redirect('/');
+    }
+
+    public function list(Request $request)
+    {
+        $user = Auth::user();
+        error_log(`$user`);
+        // Pastikan user ada
+        if (!$user || !($user instanceof UserModel)) {
+            return redirect()->back()->withErrors(['msg' => 'User not found.']);
+        }
+
+        return DataTables::of($user)
+            ->addIndexColumn() // Jika ingin menambahkan indeks otomatis
+            ->addColumn('aksi', function ($user) { // Menggunakan addColumn, bukan addRow
+                $btn = '<button onclick="modalAction(\'' . url('/profile/' . $user->user_id . '/change_profile') . '\')" class="btn btn-warning btn-sm">Change Profile</button> ';
+                $btn .= '<button onclick="modalAction(\'' . url('/profile/' . $user->user_id . '/change_password') . '\')" class="btn btn-danger btn-sm">Change Password</button> ';
+                return $btn;
+            })
+            ->rawColumns(['aksi']) // rawColumns, bukan rawRows untuk mengizinkan HTML
+            ->make(true);
+    }
+
+    public function change_profile($id)
+    {
+        $user = UserModel::findOrFail($id);
+        return view('profile.change_profile', compact('user'));
     }
 }
