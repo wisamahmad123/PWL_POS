@@ -16,7 +16,7 @@
         </div>
     </div>
 @else
-    <form action="{{ url('/profile/' . $profile->user_id . '/change_profile') }}" method="POST" id="form-edit">
+    <form action="{{ url('/profile/' . $profile->user_id . '/update_profile') }}" method="POST" id="form-edit">
         @csrf
         @method('PUT')
         <div id="modal-master" class="modal-dialog modal-lg" role="document">
@@ -29,13 +29,13 @@
                 <div class="modal-body">
                     <div class="form-group">
                         <label>Username</label>
-                        <input value="{{ $user->username }}" type="text" name="username" id="username"
+                        <input value="{{ $profile->username }}" type="text" name="username" id="username"
                             class="form-control" required>
                         <small id="error-username" class="error-text form-text text-danger"></small>
                     </div>
                     <div class="form-group">
                         <label>Nama</label>
-                        <input value="{{ $user->nama }}" type="text" name="nama" id="nama" class="form-control"
+                        <input value="{{ $profile->nama }}" type="text" name="nama" id="nama" class="form-control"
                             required>
                         <small id="error-nama" class="error-text form-text text-danger"></small>
                     </div>
