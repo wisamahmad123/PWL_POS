@@ -109,7 +109,11 @@ confirm(\'Apakah Kita yakit menghapus data ini?\');">Hapus</button></form>';*/
             'title' => 'Detail Barang'
         ];
         $activeMenu = 'barang'; // set menu yang sedang aktif
-        return view('barang.show', ['breadcrumb' => $breadcrumb, 'page' => $page, 'barang' => $barang, 'activeMenu' => $activeMenu]);
+        return view('barang.show', [
+            'breadcrumb' => $breadcrumb, 
+            'page' => $page, 
+            'barang' => $barang, 
+            'activeMenu' => $activeMenu]);
     }
     public function edit_ajax($id)
     {
