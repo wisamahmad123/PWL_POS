@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BarangController;
+use App\Http\Controllers\DetailPenjualanController;
 use App\Http\Controllers\KategoriController;
 use App\Http\Controllers\LevelController;
 use App\Http\Controllers\PenjualanController;
@@ -37,9 +38,11 @@ Route::middleware(['auth'])->group(function () {
 
     Route::middleware(['authorize:ADM,MNG,STF,CUS'])-> group(function () {
         Route::get('/profile', [ProfileController::class, 'index']);
-        Route::get('/profile/list', [ProfileController::class, 'list']);    
-        Route::get('/profile/change_profile', [ProfileController::class, 'change_profile']);      
-        Route::post('/profile/{id}/change_password', [ProfileController::class, 'change_password']);      
+        Route::post('/profile/list', [ProfileController::class, 'list']);
+        Route::get('/profile/{id}/change_profile', [ProfileController::class, 'change_profile']);      
+        Route::put('/profile/{id}/update_profile', [ProfileController::class, 'update_profile']);      
+        Route::get('/profile/{id}/change_password', [ProfileController::class, 'change_password']);      
+        Route::put('/profile/{id}/update_password', [ProfileController::class, 'update_password']);      
         Route::post('/profile/upload', [ProfileController::class, 'upload'])->name('profile.upload');
     });
 
@@ -142,7 +145,7 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/penjualan/list', [PenjualanController::class, 'list']);          // menampilkan data supplier dalam bentuk json untuk datatables
         Route::get('/penjualan/create_ajax', [PenjualanController::class, 'create_ajax']); // Menampilkan halaman form tambah supplier Ajax
         Route::post('/penjualan/ajax', [PenjualanController::class, 'store_ajax']); // Menyimpan data supplier baru Ajax
-        Route::get('/penjualan/{id}', [PenjualanController::class, 'show']);           // menampilkan detail supplier
+        Route::get('/penjualan/{id}/detail', [DetailPenjualanController::class, 'index']);           // menampilkan detail supplier
         Route::get('/penjualan/{id}/edit_ajax', [PenjualanController::class, 'edit_ajax']); // Menampilkan halaman form edit supplier Ajax 
         Route::put('/penjualan/{id}/update_ajax', [PenjualanController::class, 'update_ajax']); // Menyimpan perubahan data supplier Ajax
         Route::get('/penjualan/{id}/delete_ajax', [PenjualanController::class, 'confirm_ajax']); // Untuk tampilkan form confirm delete supplier Ajax
@@ -151,5 +154,18 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/penjualan/import_ajax', [PenjualanController::class, 'import_ajax']); // ajax import excel
         Route::GET('/penjualan/export_excel', [PenjualanController::class, 'export_excel']); // export excel
         Route::GET('/penjualan/export_pdf', [PenjualanController::class, 'export_pdf']); // export pdf
+
+        Route::post('/penjualan/{id}/detail/list', [DetailPenjualanController::class, 'list']);          // menampilkan data supplier dalam bentuk json untuk datatables
+        Route::get('/penjualan/{id}/detail/create_ajax', [DetailPenjualanController::class, 'create_ajax']); // Menampilkan halaman form tambah supplier Ajax
+        Route::post('/penjualan/{id}/detail/ajax', [DetailPenjualanController::class, 'store_ajax']); // Menyimpan data supplier baru Ajax
+        Route::get('/penjualan/{penjualan_id}/detail/{detail_id}/show', [DetailPenjualanController::class, 'show']);           // menampilkan detail supplier
+        Route::get('/penjualan/{penjualan_id}/detail/{detail_id}/edit_ajax', [DetailPenjualanController::class, 'edit_ajax']); // Menampilkan halaman form edit supplier Ajax 
+        Route::put('/penjualan/{penjualan_id}/detail/{detail_id}/update_ajax', [DetailPenjualanController::class, 'update_ajax']); // Menyimpan perubahan data supplier Ajax
+        Route::get('/penjualan/{penjualan_id}/detail/{detail_id}/delete_ajax', [DetailPenjualanController::class, 'confirm_ajax']); // Untuk tampilkan form confirm delete supplier Ajax
+        Route::delete('/penjualan/{penjualan_id}/detail/{detail_id}/delete_ajax', [DetailPenjualanController::class, 'delete_ajax']); // Untuk hapus data supplier Ajax
+        Route::get('/penjualan/{id}/detail/import', [DetailPenjualanController::class, 'import']); // Ajax Form upload excel
+        Route::post('/penjualan/{id}/detail/import_ajax', [DetailPenjualanController::class, 'import_ajax']); // ajax import excel
+        Route::GET('/penjualan/{id}/detail/export_excel', [DetailPenjualanController::class, 'export_excel']); // export excel
+        Route::GET('/penjualan/{id}/detail/export_pdf', [DetailPenjualanController::class, 'export_pdf']); // export pdf
     });
 });

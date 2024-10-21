@@ -41,6 +41,7 @@
                     </p>
                 </a>
             </li>
+            @if (Auth::user()->level_id == '1')
             <li class="nav-header">Data Pengguna</li>
             <li class="nav-item">
                 <a href="{{ url('/level') }}" class="nav-link {{ $activeMenu == 'level' ? 'active' : '' }} ">
@@ -54,6 +55,8 @@
                     <p>Data User</p>
                 </a>
             </li>
+            @endif
+            @if (Auth::user()->level_id != '4')
             <li class="nav-header">Data Barang</li>
             <li class="nav-item">
                 <a href="{{ url('/kategori') }}" class="nav-link {{ $activeMenu == 'kategori' ? 'active' : '' }} ">
@@ -81,11 +84,12 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a href="{{ url('/barang') }}" class="nav-link {{ $activeMenu == 'penjualan' ? 'active' : '' }} ">
+                <a href="{{ url('/penjualan') }}" class="nav-link {{ $activeMenu == 'penjualan' ? 'active' : '' }} ">
                     <i class="nav-icon fas fa-cash-register"></i>
                     <p>Transaksi Penjualan</p>
                 </a>
             </li>
+            @endif
             <button onclick="window.location.href='logout'" class="btn btn-primary">Logout</button>
         </ul>
     </nav>

@@ -7,7 +7,6 @@ use App\Models\StokModel;
 use App\Models\SupplierModel;
 use App\Models\UserModel;
 use Barryvdh\DomPDF\Facade\Pdf;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use PhpOffice\PhpSpreadsheet\IOFactory;

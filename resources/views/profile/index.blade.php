@@ -75,14 +75,7 @@
 
 @push('js')
 <script>
-    function modalAction(url = '') {
-        $('#myModal').load(url, function () {
-            $('#myModal').modal('show');
-        });
-    }
-
     var dataProfile;
-
     function modalAction(url = '') {
         $('#myModal').load(url, function () {
             $('#myModal').modal('show');
