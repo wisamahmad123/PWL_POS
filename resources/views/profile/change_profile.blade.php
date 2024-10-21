@@ -35,19 +35,22 @@
                     </div>
                     <div class="form-group">
                         <label>Nama</label>
-                        <input value="{{ $profile->nama }}" type="text" name="nama" id="nama" class="form-control"
-                            required>
+                        <input value="{{ $profile->nama }}" type="text" name="nama" id="nama"
+                            class="form-control" required>
                         <small id="error-nama" class="error-text form-text text-danger"></small>
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" data-dismiss="modal" class="btn btn-warning">Batal</button>
-                    <button type="submit" class="btn btn-primary">Simpan</button>
+                    <button onclick="reloadPage()" type="submit" class="btn btn-primary">Simpan</button>
                 </div>
             </div>
         </div>
     </form>
     <script>
+        function reloadPage() {
+            location.reload(); // Memuat ulang halaman
+        }
         $(document).ready(function() {
             $("#form-edit").validate({
                 rules: {
